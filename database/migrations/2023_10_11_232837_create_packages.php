@@ -11,40 +11,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('packages', function (Blueprint $table) {
-            // primary
-            $table->id()->unsigned();
-            $table->uuid();
-            // foreign
-            $table->integer('transaction_id');
-            $table->string('location_id');
-            $table->integer('organization_id');
-            // foreign to -> customer_attributes
-            $table->unsignedBigInteger('customer_attribute_id');
-            $table->foreign('customer_attribute_id')->references('id')->on('customer_attributes');
-            // foreign to -> connotes
-            $table->unsignedBigInteger('connote_id');
-            $table->foreign('connote_id')->references('id')->on('connotes');
-            // foreign to -> current_locations
-            $table->unsignedBigInteger('current_location_id');
-            $table->foreign('current_location_id')->references('id')->on('current_locations');
-            // column
-            $table->string('customer_name');
-            $table->string('customer_code');
-            $table->string('transaction_amount');
-            $table->string('transaction_discount');
-            $table->string('transaction_additional_field');
-            $table->string('transaction_payment_type');
-            $table->string('transaction_state');
-            $table->string('transaction_code');
-            $table->integer('transaction_order');
-            $table->string('transaction_payment_type_name');
-            $table->integer('transaction_cash_amount');
-            $table->integer('transaction_cash_change');
-            // timestamp
-            $table->timestampsTz();
-        });
-
         Schema::create('customer_attributes', function (Blueprint $table) {
             // primary
             $table->id()->unsigned();
@@ -93,6 +59,55 @@ return new class extends Migration
             $table->timestampsTz();
         });
 
+        Schema::create('current_locations', function (Blueprint $table) {
+            // primary
+            $table->id()->unsigned();
+            $table->uuid();
+            // column
+            $table->string('name');
+            $table->string('code');
+            $table->string('type');
+            // timestamp
+            $table->timestampsTz();
+        });
+
+        Schema::create('packages', function (Blueprint $table) {
+            // primary
+            $table->id()->unsigned();
+            $table->uuid();
+            // foreign
+            $table->integer('transaction_id');
+            $table->string('location_id');
+            $table->integer('organization_id');
+            // foreign to -> customer_attributes
+            $table->unsignedBigInteger('customer_attribute_id');
+            $table->foreign('customer_attribute_id')->references('id')->on('customer_attributes');
+            // foreign to -> connotes
+            $table->unsignedBigInteger('connote_id');
+            $table->foreign('connote_id')->references('id')->on('connotes');
+            // foreign to -> custom_fields
+            $table->unsignedBigInteger('custom_field_id');
+            $table->foreign('custom_field_id')->references('id')->on('custom_fields');
+            // foreign to -> current_locations
+            $table->unsignedBigInteger('current_location_id');
+            $table->foreign('current_location_id')->references('id')->on('current_locations');
+            // column
+            $table->string('customer_name');
+            $table->string('customer_code');
+            $table->string('transaction_amount');
+            $table->string('transaction_discount');
+            $table->string('transaction_additional_field');
+            $table->string('transaction_payment_type');
+            $table->string('transaction_state');
+            $table->string('transaction_code');
+            $table->integer('transaction_order');
+            $table->string('transaction_payment_type_name');
+            $table->integer('transaction_cash_amount');
+            $table->integer('transaction_cash_change');
+            // timestamp
+            $table->timestampsTz();
+        });
+
         Schema::create('customers', function (Blueprint $table) {
             // primary
             $table->id()->unsigned();
@@ -129,7 +144,7 @@ return new class extends Migration
             $table->string('awb_url');
             $table->integer('chargeable_weight');
             $table->integer('width');
-            $table->json('surcharge')->default();
+            $table->json('surcharge');
             $table->integer('height');
             $table->string('description');
             $table->integer('volume');
@@ -162,21 +177,6 @@ return new class extends Migration
             $table->foreign('package_id')->references('id')->on('packages');
             // column
             $table->string('note');
-            // timestamp
-            $table->timestampsTz();
-        });
-
-        Schema::create('current_locations', function (Blueprint $table) {
-            // primary
-            $table->id()->unsigned();
-            $table->uuid();
-            // foreign to -> packages
-            $table->unsignedBigInteger('package_id');
-            $table->foreign('package_id')->references('id')->on('packages');
-            // column
-            $table->string('name');
-            $table->string('code');
-            $table->string('type');
             // timestamp
             $table->timestampsTz();
         });
