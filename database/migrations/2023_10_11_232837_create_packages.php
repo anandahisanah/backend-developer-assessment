@@ -28,7 +28,7 @@ return new class extends Migration
             $table->id();
             $table->uuid();
             // foreign
-            $table->integer('state_id');
+            $table->integer('connote_state_id');
             $table->string('transaction_id');
             $table->integer('organization_id');
             $table->string('location_id');
@@ -55,6 +55,17 @@ return new class extends Migration
             $table->string('source_tariff_db');
             $table->string('id_source_tariff');
             $table->string('pod')->nullable();
+            $table->json('history');
+            // timestamp
+            $table->timestampsTz();
+        });
+
+        Schema::create('custom_fields', function (Blueprint $table) {
+            // primary
+            $table->id()->unsigned();
+            $table->uuid();
+            // column
+            $table->string('note');
             // timestamp
             $table->timestampsTz();
         });
@@ -167,19 +178,6 @@ return new class extends Migration
             // timestamp
             $table->timestampsTz();
         });
-
-        Schema::create('custom_fields', function (Blueprint $table) {
-            // primary
-            $table->id()->unsigned();
-            $table->uuid();
-            // foreign to -> packages
-            $table->unsignedBigInteger('package_id');
-            $table->foreign('package_id')->references('id')->on('packages');
-            // column
-            $table->string('note');
-            // timestamp
-            $table->timestampsTz();
-        });
     }
 
     /**
@@ -187,13 +185,13 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('current_locations');
-        Schema::dropIfExists('custom_fields');
         Schema::dropIfExists('koli_custom_fields');
         Schema::dropIfExists('kolies');
         Schema::dropIfExists('customers');
+        Schema::dropIfExists('packages');
+        Schema::dropIfExists('current_locations');
+        Schema::dropIfExists('custom_fields');
         Schema::dropIfExists('connotes');
         Schema::dropIfExists('customer_attributes');
-        Schema::dropIfExists('packages');
     }
 };

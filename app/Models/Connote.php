@@ -9,7 +9,7 @@ class Connote extends Model
 {
     protected $fillable = [
         // foreign
-        'state_id',
+        'connote_state_id',
         'transaction_id',
         'organization_id',
         'location_id',
@@ -36,6 +36,7 @@ class Connote extends Model
         'source_tariff_db',
         'id_source_tariff',
         'pod',
+        'history',
     ];
 
     public function package(): BelongsTo
