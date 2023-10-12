@@ -16,8 +16,6 @@ class CustomField extends Model
     }
 
     protected $fillable = [
-        // foreign
-        'pacakage_id',
         // column
         'note',
     ];

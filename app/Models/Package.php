@@ -22,6 +22,10 @@ class Package extends Model
         'location_id',
         'organization_id',
         'customer_attribute_id',
+        'connote_id',
+        'customer_origin_id',
+        'customer_destination_id',
+        'custom_field_id',
         'current_location_id',
         // column
         'customer_name',
