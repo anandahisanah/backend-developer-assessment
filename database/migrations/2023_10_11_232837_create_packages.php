@@ -157,7 +157,7 @@ return new class extends Migration
             $table->id()->unsigned();
             $table->uuid();
             // foreign
-            $table->integer('formula_id')->default(0);
+            $table->string('formula_id')->nullable();
             // foreign to -> packages
             $table->unsignedBigInteger('package_id');
             $table->foreign('package_id')->references('id')->on('packages');
