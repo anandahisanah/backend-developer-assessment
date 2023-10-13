@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Koli extends Model
 {
+    protected $table = 'kolies';
+    
     protected static function boot()
     {
         parent::boot();

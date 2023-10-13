@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Connote extends Model
 {
     protected $fillable = [
+        // primary
+        'uuid',
         // foreign
         'connote_state_id',
         'transaction_id',

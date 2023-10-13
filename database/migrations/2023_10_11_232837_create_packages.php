@@ -29,7 +29,7 @@ return new class extends Migration
             $table->uuid();
             // foreign
             $table->integer('connote_state_id');
-            $table->string('transaction_id');
+            $table->uuid('transaction_id');
             $table->integer('organization_id');
             $table->string('location_id');
             // column
@@ -87,9 +87,11 @@ return new class extends Migration
             $table->id()->unsigned();
             $table->uuid();
             // foreign
-            $table->integer('transaction_id');
+            $table->uuid('transaction_id');
             $table->string('location_id');
             $table->integer('organization_id');
+            $table->integer('customer_origin_id');
+            $table->integer('customer_destination_id');
             // foreign to -> customer_attributes
             $table->unsignedBigInteger('customer_attribute_id');
             $table->foreign('customer_attribute_id')->references('id')->on('customer_attributes');
@@ -107,7 +109,7 @@ return new class extends Migration
             $table->string('customer_code');
             $table->string('transaction_amount');
             $table->string('transaction_discount');
-            $table->string('transaction_additional_field');
+            $table->string('transaction_additional_field')->nullable();
             $table->string('transaction_payment_type');
             $table->string('transaction_state');
             $table->string('transaction_code');
@@ -128,12 +130,13 @@ return new class extends Migration
             $table->string('location_id');
             // column
             $table->string('type'); // origin, destination
-            $table->string('name');
-            $table->string('address');
-            $table->string('email')->nullable();
-            $table->string('phone');
-            $table->string('address_detail')->nullable();
-            $table->string('zip_code');
+            $table->string('customer_name');
+            $table->string('customer_address');
+            $table->string('customer_email')->nullable();
+            $table->string('customer_phone');
+            $table->string('customer_address_detail')->nullable();
+            $table->string('customer_zip_code');
+            $table->string('zone_code');
             // timestamp
             $table->timestampsTz();
         });
@@ -173,8 +176,8 @@ return new class extends Migration
             $table->unsignedBigInteger('koli_id');
             $table->foreign('koli_id')->references('id')->on('kolies');
             // column
-            $table->string('awb_sicepat');
-            $table->string('price');
+            $table->string('awb_sicepat')->nullable();
+            $table->string('price')->nullable();
             // timestamp
             $table->timestampsTz();
         });

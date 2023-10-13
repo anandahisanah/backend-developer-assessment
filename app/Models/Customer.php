@@ -20,11 +20,12 @@ class Customer extends Model
         'location_id',
         // column
         'type', // origin, destination
-        'name',
-        'address',
-        'email',
-        'phone',
-        'address_detail',
-        'zip_code',
+        'customer_name',
+        'customer_address',
+        'customer_email',
+        'customer_phone',
+        'customer_address_detail',
+        'customer_zip_code',
+        'zone_code',
     ];
 }
