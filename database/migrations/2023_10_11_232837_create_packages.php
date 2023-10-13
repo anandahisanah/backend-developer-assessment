@@ -28,25 +28,25 @@ return new class extends Migration
             $table->id();
             $table->uuid();
             // foreign
-            $table->integer('connote_state_id');
+            $table->integer('connote_state_id')->default(0);
             $table->uuid('transaction_id');
-            $table->integer('organization_id');
+            $table->integer('organization_id')->default(0);
             $table->string('location_id');
             // column
-            $table->integer('connote_number');
+            $table->integer('connote_number')->default(0);
             $table->string('connote_service');
-            $table->integer('connote_service_price');
-            $table->integer('connote_amount');
+            $table->integer('connote_service_price')->default(0);
+            $table->integer('connote_amount')->default(0);
             $table->string('connote_code');
             $table->string('connote_booking_code')->nullable();
-            $table->integer('connote_order');
+            $table->integer('connote_order')->default(0);
             $table->string('connote_state');
             $table->string('zone_code_from');
             $table->string('zone_code_to');
             $table->string('surcharge_amount')->nullable();
-            $table->integer('actual_weight');
-            $table->integer('volume_weight');
-            $table->integer('chargeable_weight');
+            $table->integer('actual_weight')->default(0);
+            $table->integer('volume_weight')->default(0);
+            $table->integer('chargeable_weight')->default(0);
             $table->string('connote_total_package')->default('0');
             $table->string('connote_surcharge_amount')->default('0');
             $table->string('connote_sla_day')->default('0');
@@ -89,9 +89,9 @@ return new class extends Migration
             // foreign
             $table->uuid('transaction_id');
             $table->string('location_id');
-            $table->integer('organization_id');
-            $table->integer('customer_origin_id');
-            $table->integer('customer_destination_id');
+            $table->integer('organization_id')->default(0);
+            $table->integer('customer_origin_id')->default(0);
+            $table->integer('customer_destination_id')->default(0);
             // foreign to -> customer_attributes
             $table->unsignedBigInteger('customer_attribute_id');
             $table->foreign('customer_attribute_id')->references('id')->on('customer_attributes');
@@ -113,10 +113,10 @@ return new class extends Migration
             $table->string('transaction_payment_type');
             $table->string('transaction_state');
             $table->string('transaction_code');
-            $table->integer('transaction_order');
+            $table->integer('transaction_order')->default(0);
             $table->string('transaction_payment_type_name');
-            $table->integer('transaction_cash_amount');
-            $table->integer('transaction_cash_change');
+            $table->integer('transaction_cash_amount')->default(0);
+            $table->integer('transaction_cash_change')->default(0);
             // timestamp
             $table->timestampsTz();
         });
@@ -126,7 +126,7 @@ return new class extends Migration
             $table->id()->unsigned();
             $table->uuid();
             // foreign
-            $table->integer('organization_id');
+            $table->integer('organization_id')->default(0);
             $table->string('location_id');
             // column
             $table->string('type'); // origin, destination
@@ -157,7 +157,7 @@ return new class extends Migration
             $table->id()->unsigned();
             $table->uuid();
             // foreign
-            $table->integer('formula_id')->nullable();
+            $table->integer('formula_id')->default(0);
             // foreign to -> packages
             $table->unsignedBigInteger('package_id');
             $table->foreign('package_id')->references('id')->on('packages');
@@ -168,15 +168,15 @@ return new class extends Migration
             $table->unsignedBigInteger('koli_custom_field_id');
             $table->foreign('koli_custom_field_id')->references('id')->on('koli_custom_fields');
             // column
-            $table->integer('length');
+            $table->integer('length')->default(0);
             $table->string('awb_url');
-            $table->integer('chargeable_weight');
-            $table->integer('width');
+            $table->integer('chargeable_weight')->default(0);
+            $table->integer('width')->default(0);
             $table->json('surcharge');
-            $table->integer('height');
+            $table->integer('height')->default(0);
             $table->string('description');
-            $table->integer('volume');
-            $table->integer('weight');
+            $table->integer('volume')->default(0);
+            $table->integer('weight')->default(0);
             $table->string('code');
             // timestamp
             $table->timestampsTz();
