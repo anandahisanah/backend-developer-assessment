@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Observers\UuidObserver;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class KoliCustomField extends Model
 {
