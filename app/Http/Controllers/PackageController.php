@@ -35,10 +35,37 @@ class PackageController extends Controller
                 'message' => 'Success',
                 'data' => $package,
             ]);
-        } catch (\Throwable $th) {
+        } catch (\Throwable) {
             return response()->json([
                 'status' => 'failed',
-                'message' => $th->getMessage(),
+                'message' => 'Data not found',
+                'data' => null,
+            ]);
+        }
+    }
+
+    public function first($uuid)
+    {
+        try {
+            $package = PackageResource::make(Package::where('uuid', $uuid)->with([
+                'customer_attribute',
+                'connote',
+                'customer_origin',
+                'customer_destination',
+                'kolies.koli_custom_field',
+                'custom_field',
+                'current_location',
+            ])->first());
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Success',
+                'data' => $package,
+            ]);
+        } catch (\Throwable) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Data not found',
                 'data' => null,
             ]);
         }
