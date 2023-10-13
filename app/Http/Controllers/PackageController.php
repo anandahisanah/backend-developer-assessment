@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateRequest;
+use App\Http\Resources\PackageResource;
 use App\Models\Connote;
 use App\Models\CurrentLocation;
 use App\Models\Customer;
@@ -16,6 +17,33 @@ use Illuminate\Support\Facades\DB;
 
 class PackageController extends Controller
 {
+    public function get()
+    {
+        try {
+            $package = PackageResource::collection(Package::with([
+                'customer_attribute',
+                'connote',
+                'customer_origin',
+                'customer_destination',
+                'kolies.koli_custom_field',
+                'custom_field',
+                'current_location',
+            ])->get());
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Success',
+                'data' => $package,
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => $th->getMessage(),
+                'data' => null,
+            ]);
+        }
+    }
+
     public function create(CreateRequest $request): JsonResponse
     {
         try {
@@ -132,11 +160,18 @@ class PackageController extends Controller
             ]);
 
             foreach ($request->kolies as $request_koli) {
-                $koli = Koli::create([
+                $koli_custom_field = KoliCustomField::create([
+                    // column
+                    'awb_sicepat' => $request_koli['koli_custom_field']['awb_sicepat'],
+                    'price' => $request_koli['koli_custom_field']['price'],
+                ]);
+
+                Koli::create([
                     // foreign
                     'formula_id' => $request_koli['koli_formula_id'],
                     'package_id' => $package->id,
                     'connote_id' => $connote->id,
+                    'koli_custom_field_id' => $koli_custom_field->id,
                     // column
                     'length' => $request_koli['koli_length'],
                     'awb_url' => $request_koli['awb_url'],
@@ -148,14 +183,6 @@ class PackageController extends Controller
                     'volume' => $request_koli['koli_volume'],
                     'weight' => $request_koli['koli_weight'],
                     'code' => $request_koli['koli_code'],
-                ]);
-
-                KoliCustomField::create([
-                    // foreign
-                    'koli_id' => $koli->id,
-                    // column
-                    'awb_sicepat' => $request_koli['koli_custom_field']['awb_sicepat'],
-                    'price' => $request_koli['koli_custom_field']['price'],
                 ]);
             }
 
