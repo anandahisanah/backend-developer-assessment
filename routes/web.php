@@ -18,4 +18,5 @@ Route::prefix('package')->group(function() {
     Route::get('/', [PackageController::class, 'get']);
     Route::get('/{uuid}', [PackageController::class, 'first']);
     Route::post('/', [PackageController::class, 'create']);
+    Route::put('/{uuid}', [PackageController::class, 'put']);
 });
