@@ -141,6 +141,17 @@ return new class extends Migration
             $table->timestampsTz();
         });
 
+        Schema::create('koli_custom_fields', function (Blueprint $table) {
+            // primary
+            $table->id()->unsigned();
+            $table->uuid();
+            // column
+            $table->string('awb_sicepat')->nullable();
+            $table->string('price')->nullable();
+            // timestamp
+            $table->timestampsTz();
+        });
+
         Schema::create('kolies', function (Blueprint $table) {
             // primary
             $table->id()->unsigned();
@@ -153,6 +164,9 @@ return new class extends Migration
             // foreign to -> connotes
             $table->unsignedBigInteger('connote_id');
             $table->foreign('connote_id')->references('id')->on('connotes');
+            // foreign to -> koli_custom_fields
+            $table->unsignedBigInteger('koli_custom_field_id');
+            $table->foreign('koli_custom_field_id')->references('id')->on('koli_custom_fields');
             // column
             $table->integer('length');
             $table->string('awb_url');
@@ -167,20 +181,6 @@ return new class extends Migration
             // timestamp
             $table->timestampsTz();
         });
-
-        Schema::create('koli_custom_fields', function (Blueprint $table) {
-            // primary
-            $table->id()->unsigned();
-            $table->uuid();
-            // foreign to -> kolies
-            $table->unsignedBigInteger('koli_id');
-            $table->foreign('koli_id')->references('id')->on('kolies');
-            // column
-            $table->string('awb_sicepat')->nullable();
-            $table->string('price')->nullable();
-            // timestamp
-            $table->timestampsTz();
-        });
     }
 
     /**
@@ -188,8 +188,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('koli_custom_fields');
         Schema::dropIfExists('kolies');
+        Schema::dropIfExists('koli_custom_fields');
         Schema::dropIfExists('customers');
         Schema::dropIfExists('packages');
         Schema::dropIfExists('current_locations');

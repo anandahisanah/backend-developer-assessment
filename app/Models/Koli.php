@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Koli extends Model
 {
     protected $table = 'kolies';
-    
+
     protected static function boot()
     {
         parent::boot();
@@ -22,6 +22,7 @@ class Koli extends Model
         'formula_id',
         'package_id',
         'connote_id',
+        'koli_custom_field_id',
         // column
         'length',
         'awb_url',
@@ -43,5 +44,10 @@ class Koli extends Model
     public function connote(): BelongsTo
     {
         return $this->belongsTo(Connote::class);
+    }
+
+    public function koli_custom_field(): BelongsTo
+    {
+        return $this->belongsTo(KoliCustomField::class);
     }
 }

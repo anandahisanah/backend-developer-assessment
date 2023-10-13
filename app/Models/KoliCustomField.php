@@ -16,15 +16,8 @@ class KoliCustomField extends Model
     }
 
     protected $fillable = [
-        // foreign
-        'koli_id',
         // column
         'awb_sicepat',
         'price',
     ];
-
-    public function koli(): BelongsTo
-    {
-        return $this->belongsTo(Koli::class);
-    }
 }
