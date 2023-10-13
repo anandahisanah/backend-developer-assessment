@@ -15,5 +15,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('package')->group(function() {
+    Route::get('/', [PackageController::class, 'get']);
     Route::post('/', [PackageController::class, 'create']);
 });
