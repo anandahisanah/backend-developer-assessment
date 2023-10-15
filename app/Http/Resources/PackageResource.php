@@ -15,6 +15,8 @@ class PackageResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            // primary
+            'id' => $this->uuid,
             // foreign
             'transaction_id' => $this->transaction_id,
             'location_id' => $this->location_id,
