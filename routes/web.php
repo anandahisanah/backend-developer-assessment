@@ -20,4 +20,5 @@ Route::prefix('package')->group(function() {
     Route::post('/', [PackageController::class, 'create']);
     Route::put('/{uuid}', [PackageController::class, 'put']);
     Route::patch('/{uuid}', [PackageController::class, 'patch']);
+    Route::delete('/{uuid}', [PackageController::class, 'delete']);
 });
