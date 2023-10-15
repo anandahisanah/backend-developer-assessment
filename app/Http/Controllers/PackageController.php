@@ -436,4 +436,67 @@ class PackageController extends Controller
             ]);
         }
     }
+
+    public function delete($uuid): JsonResponse
+    {
+        try {
+            DB::beginTransaction();
+
+            // find package
+            $package = Package::where('uuid', $uuid)->first();
+
+            $customer_attribute_id = $package->customer_attribute->id;
+            $connote_id = $package->connote->id;
+            $customer_origin_id = $package->customer_origin->id;
+            $customer_destination_id = $package->customer_destination->id;
+            $custom_field_id = $package->custom_field->id;
+            $current_location_id = $package->current_location->id;
+
+            // delete relation kolies->koli_custom_field
+            $package->kolies->each(function ($koli) {
+                $koli_custom_field_id = $koli->koli_custom_field->id;
+
+                // delete relation koli
+                $koli->delete();
+
+                // delete relation koli->koli_custom_field_id
+                KoliCustomField::where('id', $koli_custom_field_id)->delete();
+            });
+
+            // delete package
+            $package->delete();
+
+            // delete relation customer_attribute
+            CustomerAttribute::find($customer_attribute_id)->delete();
+
+            // delete relation connote
+            Connote::find($connote_id)->delete();
+
+            // delete relation customer_origin
+            Customer::find($customer_origin_id)->delete();
+
+            // delete relation customer_destination
+            Customer::find($customer_destination_id)->delete();
+
+            // delete relation custom_field
+            CustomField::find($custom_field_id)->delete();
+
+            // delete relation current_location
+            CurrentLocation::find($current_location_id)->delete();
+
+            DB::commit();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Success',
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            return response()->json([
+                'status' => 'failed',
+                'message' => $th->getMessage(),
+            ]);
+        }
+    }
 }
