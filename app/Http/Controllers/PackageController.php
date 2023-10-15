@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateRequest;
+use App\Http\Requests\PatchRequest;
 use App\Http\Requests\PutRequest;
 use App\Http\Resources\PackageResource;
 use App\Models\Connote;
@@ -248,7 +249,6 @@ class PackageController extends Controller
 
             // find package
             $package = Package::where('uuid', $uuid)->first();
-            // dd($package);
 
             // update customer attribute
             CustomerAttribute::where('id', $package->customer_attribute->id)->first()->update([
@@ -368,7 +368,7 @@ class PackageController extends Controller
             }
 
             // update package
-            $package->first()->update([
+            $package->update([
                 // foreign
                 'transaction_id' => $request->transaction_id,
                 'location_id' => $request->location_id,
@@ -386,6 +386,39 @@ class PackageController extends Controller
                 'transaction_payment_type_name' => $request->transaction_payment_type_name,
                 'transaction_cash_amount' => $request->transaction_cash_amount,
                 'transaction_cash_change' => $request->transaction_cash_change,
+            ]);
+
+            DB::commit();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Success',
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            return response()->json([
+                'status' => 'failed',
+                'message' => $th->getMessage(),
+            ]);
+        }
+    }
+
+    public function patch(PatchRequest $request, $uuid): JsonResponse
+    {
+        try {
+            DB::beginTransaction();
+
+            // validate request
+            $request->validated();
+
+            // find package
+            $package = Package::where('uuid', $uuid)->first();
+
+            // update package
+            $package->update([
+                // column
+                'transaction_state' => $request->transaction_state,
             ]);
 
             DB::commit();
