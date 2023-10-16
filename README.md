@@ -9,9 +9,10 @@
 
 1. Copy file `.env.example` to `.env` and setup your database.
 2. Run `composer install`
-3. Run `php artisan optimize`
-4. Run `php artisan migrate`
-5. Run `php artisan serve`
+3. Run `php artisan key:generate`
+4. Run `php artisan optimize`
+5. Run `php artisan migrate`
+6. Run `php artisan serve`
 
 ### Documentation
 
