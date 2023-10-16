@@ -18,6 +18,7 @@
 
 - ERD (Entity-Relationship Diagram): https://drive.google.com/file/d/19DZ9QatpyknJA0KarUKxNTRRlM_fyd7I/view?usp=sharing
 - API Scribe Documentation - Access the API documentation by visiting: <i><b>http://{your local address}/docs</b></i>
+- Postman Collection JSON (.postman_collection.json): https://drive.google.com/file/d/1xa4maED2D6VU3GvzB6KTxZvctbxS3Lyl/view?usp=drive_link
 
 ### Running Test
 
