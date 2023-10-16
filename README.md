@@ -18,3 +18,9 @@
 
 - ERD (Entity-Relationship Diagram): https://drive.google.com/file/d/19DZ9QatpyknJA0KarUKxNTRRlM_fyd7I/view?usp=sharing
 - API Scribe Documentation - Access the API documentation by visiting: <i><b>http://{your local address}/docs</b></i>
+
+### Running Test
+
+```
+php artisan test
+```
