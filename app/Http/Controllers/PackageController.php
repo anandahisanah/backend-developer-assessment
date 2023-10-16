@@ -19,6 +19,12 @@ use Illuminate\Support\Facades\DB;
 
 class PackageController extends Controller
 {
+    /**
+     * GET package
+     *
+     * Return an array of all package data.
+     *
+     */
     public function get()
     {
         try {
@@ -46,6 +52,15 @@ class PackageController extends Controller
         }
     }
 
+
+    /**
+     * GET package/{uuid}
+     *
+     * Return package data with uuid parameter.
+     *
+     * @urlParam uuid string Example: your-uuid-string
+     *
+     */
     public function first($uuid)
     {
         try {
@@ -73,6 +88,14 @@ class PackageController extends Controller
         }
     }
 
+    /**
+     * POST package
+     *
+     * Create new package.
+     *
+     * @urlParam uuid string Example: your-uuid-string
+     *
+     */
     public function create(CreateRequest $request): JsonResponse
     {
         try {
@@ -239,6 +262,14 @@ class PackageController extends Controller
         }
     }
 
+    /**
+     * PUT package/{uuid}
+     *
+     * Update an existing package.
+     *
+     * @urlParam uuid string Example: your-uuid-string
+     *
+     */
     public function put(PutRequest $request, $uuid): JsonResponse
     {
         try {
@@ -404,6 +435,14 @@ class PackageController extends Controller
         }
     }
 
+    /**
+     * PATCH package/{uuid}
+     *
+     * Partially update a package.
+     *
+     * @urlParam uuid string Example: your-uuid-string
+     *
+     */
     public function patch(PatchRequest $request, $uuid): JsonResponse
     {
         try {
@@ -437,6 +476,14 @@ class PackageController extends Controller
         }
     }
 
+    /**
+     * DELETE package/{uuid}
+     *
+     * Deletes an existing package.
+     *
+     * @urlParam uuid string Example: your-uuid-string
+     *
+     */
     public function delete($uuid): JsonResponse
     {
         try {
